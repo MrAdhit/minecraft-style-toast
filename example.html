@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="mctoast.css" />
     </head>
     <body>
+        <span style="font-family: Minecrafto"></span>
         <mc-toast></mc-toast>
         <script src="./mctoast.js"></script>
         <script>
@@ -16,7 +17,7 @@
             toast.setSoundEnable(true);
 
             toast.onTextureLoad(() => {
-                let index = 7;
+                let index = 8;
                 let interval = setInterval(() => {
                     if (index < 2) {
                         toast.queueDrawPop(
@@ -45,15 +46,32 @@
                     }
 
                     if (index == 8) {
-                        toast.queueDrawPop("Error", "Error style test", 1);
+                        toast.queueDrawPop(
+                            "Error",
+                            "Error style test",
+                            TOAST_TYPE.ERROR
+                        );
                     }
 
-                    if (index >= 9) {
+                    if (index == 9) {
+                        toast.queueDrawPop(
+                            "Advancement Made!",
+                            "Advancement style test",
+                            TOAST_TYPE.ADVANCEMENT
+                        );
+                    }
+
+                    if (index >= 10) {
                         index = -1;
                     }
 
                     index++;
                 }, 500);
+                // clearInterval(interval);
+                // setTimeout(() => {
+                //     toast.draw("Advancement Made!", "Iron Age").advancement();
+                //     toast.pop();
+                // }, 1000);
             });
         </script>
     </body>
