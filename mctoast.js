@@ -4,6 +4,7 @@ const TOAST_TYPE = {
     "WARNING": 0,
     "ERROR": 1,
     "ADVANCEMENT": 2,
+    "RARE_ADVANCEMENT": 3,
 }
 
 class McToast {
@@ -54,9 +55,9 @@ class McToast {
         return new Drawer(title, description, this.tex, this.ctx);
     }
 
-    queueDrawPop(title, description, toast_type = TOAST_TYPE.WARNING, scaling = 2, duration = 2000) {
+    queueDrawPop(title, description, toast_type = TOAST_TYPE.WARNING, scaling = 2, duration = 2000, imageUrl = "https://minecraftitemids.com/item/32/iron_pickaxe.png") {
         let toast = {
-            title, description, scaling, duration, toast_type
+            title, description, scaling, duration, toast_type, imageUrl
         }
 
         this.popQueues.push(toast);
@@ -79,7 +80,11 @@ class McToast {
                             break;
 
                         case TOAST_TYPE.ADVANCEMENT:
-                            this.draw(t.title, t.description).advancement(t.scaling);
+                            this.draw(t.title, t.description).advancement(t.scaling, t.imageUrl);
+                            break;
+
+                        case TOAST_TYPE.RARE_ADVANCEMENT:
+                            this.draw(t.title, t.description).rareAdvancement(t.scaling, t.imageUrl);
                             break;
 
                         default:
@@ -123,6 +128,48 @@ class Drawer {
 
     clear() {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    }
+
+    rareAdvancement(scaling = 2, imageUrl = "https://minecraftitemids.com/item/32/iron_pickaxe.png") {
+        this.clear();
+
+        this.ctx.font = (8 * scaling) + "px Minecrafto";
+        let longest = ((this.ctx.measureText(this.title).width / scaling) > (this.ctx.measureText(this.description).width / scaling) ? this.title : this.description);
+
+        let renderedWidth = (this.ctx.measureText(longest).width / scaling) + 37;
+        let toasts = new OffscreenCanvas(renderedWidth * 3, 32 * 3);
+        let tctx = toasts.getContext("2d");
+        tctx.imageSmoothingEnabled = false;
+
+        tctx.fillStyle = "#212121";
+        tctx.fillRect(4, 4, (toasts.width - 6), (toasts.height - 6));
+
+        tctx.drawImage(this.tex, 12, 0, 4, 4, 0, 0, 4 * 3, 4 * 3); // Top Left
+        tctx.drawImage(this.tex, 14, 0, 3, 3, 3 * 3, 0, toasts.width - (6 * 3), 3 * 3); // Top
+        tctx.drawImage(this.tex, 16, 0, 4, 4, toasts.width - (4 * 3), 0, 4 * 3, 4 * 3); // Top Right
+        tctx.drawImage(this.tex, 17, 3, 3, 3, toasts.width - (3 * 3), 3 * 3, 3 * 3, (toasts.height - (6 * 3))); // Right
+        tctx.drawImage(this.tex, 16, 4, 4, 4, toasts.width - (4 * 3), toasts.height - (4 * 3), 4 * 3, 4 * 3); // Bottom Right
+        tctx.drawImage(this.tex, 15, 5, 3, 3, 3 * 3, toasts.height - (3 * 3), (toasts.width - (6 * 3)), 3 * 3); // Bottom
+        tctx.drawImage(this.tex, 12, 4, 4, 4, 0, toasts.height - (4 * 3), 4 * 3, 4 * 3); // Bottom Left
+        tctx.drawImage(this.tex, 12, 2, 3, 3, 0, 3 * 3, 3 * 3, (toasts.height - (6 * 3))); // Left
+
+        toast_width = (tctx.canvas.width / 3) * scaling;
+
+        let itemImg = new Image();
+        itemImg.src = imageUrl;
+
+        itemImg.onload = () => {
+            tctx.drawImage(itemImg, 0, 0, 32, 32, 27, 32, 36, 36);
+
+            this.ctx.drawImage(toasts, 0, 0, renderedWidth * 3, 32 * 3, 0, 0, renderedWidth * scaling, calcHeight(32, renderedWidth, renderedWidth * scaling))
+
+            this.ctx.font = (8 * scaling) + "px Minecrafto";
+            this.ctx.fillStyle = "#FF55FF";
+            this.ctx.textBaseline = "top";
+            this.ctx.fillText(this.title, 28 * scaling, 9 * scaling);
+            this.ctx.fillStyle = "#fff";
+            this.ctx.fillText(this.description, 28 * scaling, 18 * scaling);
+        }
     }
 
     advancement(scaling = 2, imageUrl = "https://minecraftitemids.com/item/32/iron_pickaxe.png") {

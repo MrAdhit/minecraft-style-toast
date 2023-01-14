@@ -57,11 +57,25 @@
                         toast.queueDrawPop(
                             "Advancement Made!",
                             "Advancement style test",
-                            TOAST_TYPE.ADVANCEMENT
+                            TOAST_TYPE.ADVANCEMENT,
+                            2,
+                            2000,
+                            "https://minecraftitemids.com/item/32/iron_pickaxe.png"
                         );
                     }
 
-                    if (index >= 10) {
+                    if (index == 10) {
+                        toast.queueDrawPop(
+                            "Challange Complete!",
+                            "Rare advancement style test",
+                            TOAST_TYPE.RARE_ADVANCEMENT,
+                            2,
+                            2000,
+                            "https://minecraftitemids.com/item/32/diamond_hoe.png"
+                        );
+                    }
+
+                    if (index >= 11) {
                         index = -1;
                     }
 
@@ -69,7 +83,9 @@
                 }, 500);
                 // clearInterval(interval);
                 // setTimeout(() => {
-                //     toast.draw("Advancement Made!", "Iron Age").advancement();
+                //     toast
+                //         .draw("Advancement Made!", "Iron Age")
+                //         .rareAdvancement();
                 //     toast.pop();
                 // }, 1000);
             });
