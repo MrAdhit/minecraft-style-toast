@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Toast Tester</title>
+        <link rel="stylesheet" href="mctoast.css" />
+    </head>
+    <body>
+        <mc-toast></mc-toast>
+        <script src="./mctoast.js"></script>
+        <script>
+            let toast = new McToast();
+            toast.onTextureLoad(() => {
+                let index = 0;
+                let interval = setInterval(() => {
+                    if (index < 2) {
+                        toast.queueDrawPop(
+                            "Test Title",
+                            "Test queue number " + index
+                        );
+                    }
+
+                    if (index >= 2 && index < 6) {
+                        toast.queueDrawPop(
+                            "Scaling Test",
+                            "Scaling " + (index - 1),
+                            index - 1
+                        );
+                    }
+
+                    if (index >= 6 && index < 8) {
+                        toast.queueDrawPop(
+                            "Show Duration Test",
+                            index - 5 + " Second(s)",
+                            2,
+                            (index - 5) * 1000
+                        );
+                    }
+
+                    if (index >= 8) {
+                        index = -1;
+                    }
+
+                    index++;
+                }, 500);
+            });
+        </script>
+    </body>
+</html>
