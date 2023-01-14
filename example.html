@@ -8,12 +8,16 @@
         <link rel="stylesheet" href="mctoast.css" />
     </head>
     <body>
+        <span style="font-family: Minecrafto"></span>
         <mc-toast></mc-toast>
         <script src="./mctoast.js"></script>
         <script>
             let toast = new McToast();
+
+            toast.setSoundEnable(true);
+
             toast.onTextureLoad(() => {
-                let index = 0;
+                let index = 8;
                 let interval = setInterval(() => {
                     if (index < 2) {
                         toast.queueDrawPop(
@@ -41,12 +45,60 @@
                         );
                     }
 
-                    if (index >= 8) {
+                    if (index == 8) {
+                        toast.queueDrawPop(
+                            "Error",
+                            "Error style test",
+                            TOAST_TYPE.ERROR
+                        );
+                    }
+
+                    if (index == 9) {
+                        toast.queueDrawPop(
+                            "Advancement Made!",
+                            "Advancement style test",
+                            TOAST_TYPE.ADVANCEMENT,
+                            2,
+                            2000,
+                            "https://minecraftitemids.com/item/32/iron_pickaxe.png"
+                        );
+                    }
+
+                    if (index == 10) {
+                        toast.queueDrawPop(
+                            "Challange Complete!",
+                            "Rare advancement style test",
+                            TOAST_TYPE.RARE_ADVANCEMENT,
+                            2,
+                            2000,
+                            "https://minecraftitemids.com/item/32/diamond_hoe.png"
+                        );
+                    }
+
+                    if (index == 11) {
+                        toast.queueDrawPop(
+                            "New Recipes Unlocked!",
+                            "New recipes style test",
+                            TOAST_TYPE.RECIPES,
+                            2,
+                            2000,
+                            "https://minecraftitemids.com/item/32/diamond_hoe.png"
+                        );
+                    }
+
+                    if (index >= 12) {
                         index = -1;
                     }
 
                     index++;
                 }, 500);
+                // clearInterval(interval);
+                // setTimeout(() => {
+                //     toast
+                //         .draw("Advancement Made!", "Iron Age")
+                //         .recipeUnlocked();
+                //     toast.pop();
+                // }, 1000);
             });
         </script>
     </body>
