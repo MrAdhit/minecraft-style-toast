@@ -12,6 +12,9 @@
         <script src="./mctoast.js"></script>
         <script>
             let toast = new McToast();
+
+            toast.setSoundEnable(true);
+
             toast.onTextureLoad(() => {
                 let index = 7;
                 let interval = setInterval(() => {

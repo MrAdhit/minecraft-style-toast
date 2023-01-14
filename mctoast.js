@@ -16,7 +16,6 @@ class McToast {
         this.target = document.createElement("div");
         this.target.replaceChildren(toast);
 
-        // this.target.style.position = "absolute";
         this.target.style.right = "-102%";
         this.target.style.transition = "2s cubic-bezier(0.25, 1, 0.5, 1)";
         this.target.style.position = "relative";
@@ -26,6 +25,7 @@ class McToast {
         this.element.style.width = "99vw";
         this.element.style.overflow = "hidden";
         this.element.style.display = "block";
+        this.element.style.position = "absolute"
 
         this.element.appendChild(this.target);
 
@@ -33,6 +33,16 @@ class McToast {
 
         this.tex = new Image();
         this.tex.src = "assets/img/toast.png";
+
+        this.enableSound = false;
+        this.popupSound = {
+            in: new Audio("assets/sounds/popup-in.ogg"),
+            out: new Audio("assets/sounds/popup-out.ogg")
+        }
+    }
+
+    setSoundEnable(enable) {
+        this.enableSound = enable;
     }
 
     onTextureLoad(event) {
@@ -84,9 +94,11 @@ class McToast {
 
     pop(duration = 2000) {
         return new Promise((resolve, reject) => {
+            if (this.enableSound) this.popupSound.in.play();
             this.target.style.right = -(window.visualViewport.width - (toast_width + 20)) + "px";
 
             setTimeout(() => {
+                if (this.enableSound) this.popupSound.out.play();
                 this.target.style.right = "-102%";
                 setTimeout(() => {
                     resolve();
