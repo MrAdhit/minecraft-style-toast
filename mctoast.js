@@ -31,7 +31,7 @@ class McToast {
         this.popQueues = [];
 
         this.tex = new Image();
-        this.tex.src = "/assets/img/toast.png";
+        this.tex.src = "assets/img/toast.png";
     }
 
     onTextureLoad(event) {
