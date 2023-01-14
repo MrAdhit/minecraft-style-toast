@@ -75,7 +75,18 @@
                         );
                     }
 
-                    if (index >= 11) {
+                    if (index == 11) {
+                        toast.queueDrawPop(
+                            "New Recipes Unlocked!",
+                            "New recipes style test",
+                            TOAST_TYPE.RECIPES,
+                            2,
+                            2000,
+                            "https://minecraftitemids.com/item/32/diamond_hoe.png"
+                        );
+                    }
+
+                    if (index >= 12) {
                         index = -1;
                     }
 
@@ -85,7 +96,7 @@
                 // setTimeout(() => {
                 //     toast
                 //         .draw("Advancement Made!", "Iron Age")
-                //         .rareAdvancement();
+                //         .recipeUnlocked();
                 //     toast.pop();
                 // }, 1000);
             });
