@@ -1,2 +1,2 @@
 ## Preview
-<video src='https://akuadit.oss-ap-southeast-1.aliyuncs.com/videos/2023-01-15_00-25-10_2.mp4' width=1080/>
+https://user-images.githubusercontent.com/47937950/212524418-4896d1c7-f2b4-448b-8189-874346b2aa7d.mp4
